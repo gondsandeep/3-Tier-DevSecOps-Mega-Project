@@ -13,6 +13,7 @@ metadata:
     alb.ingress.kubernetes.io/ssl-redirect: '443'
     kubernetes.io/ingress.class: alb
 spec:
+ ingressClassName: alb
   rules:
     - host: cloudslink.xyz
       http:
