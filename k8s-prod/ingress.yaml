@@ -4,13 +4,17 @@ metadata:
   name: user-management-ingress
   namespace: prod
   annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-prod
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
-    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    alb.ingress.kubernetes.io/group.name: app-lb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-south-1:851937375953:certificate/85034b18-cf25-499a-8b79-060017e94826
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/backend-protocol: HTTP
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80}, {"HTTPS":443}]'
+    alb.ingress.kubernetes.io/ssl-redirect: '443'
+    kubernetes.io/ingress.class: alb
 spec:
-  ingressClassName: nginx
   rules:
-    - host: adityajaiswal.com
+    - host: cloudslink.xyz
       http:
         paths:
           - path: /api
@@ -27,7 +31,7 @@ spec:
                 name: frontend-svc
                 port:
                   number: 80
-    - host: www.adityajaiswal.com
+    - host: www.cloudslink.xyz
       http:
         paths:
           - path: /api
@@ -46,6 +50,6 @@ spec:
                   number: 80
   tls:
     - hosts:
-        - adityajaiswal.com
-        - www.adityajaiswal.com
+        - cloudslink.xyz
+        - www.cloudslink.xyz
       secretName: adityajaiswal-co-tls
